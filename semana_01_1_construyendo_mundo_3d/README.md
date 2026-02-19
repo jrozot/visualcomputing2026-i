@@ -29,12 +29,12 @@ Además, se muestra información estructural del modelo como el número de vért
 
 ## Resultados visuales:
 ### Three.js:
-[visualización modelo simple](./media/model_1.gif)
+![visualización modelo simple](./media/model_1.gif)
 
-[visualización modelo con aristas y vérctices](./media/model_mesh.gif)
+![visualización modelo con aristas y vérctices](./media/model_mesh.gif)
 
 ### Python:
-[imagen de ejecucion en colab](./media/model_py.png)
+![imagen de ejecucion en colab](./media/model_py.png)
 
 ## Código relevante:
 
