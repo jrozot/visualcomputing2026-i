@@ -1,0 +1,183 @@
+==============================================================================
+ 3D BOIDS FLOCKING DASHBOARD — VIDEO SCRIPT (target runtime ~5:00)
+==============================================================================
+
+Format:
+  Action: what the presenter does on screen (the screen recording).
+  Voice:  the voice-over, spoken verbatim while that action happens.
+
+Pacing note: aim for a calm, steady delivery (~140 words/min). Pause briefly
+between sections. Total spoken text is sized for roughly five minutes.
+
+------------------------------------------------------------------------------
+[00:00 — 00:30]  SECTION 1 — INTRO / TITLE
+------------------------------------------------------------------------------
+
+Action: The application window is already open, paused, showing the dark
+        dashboard. The 3D cube with the static flock fills the left side; the
+        controls, metrics and charts sit in the sidebar on the right. Slowly
+        drag the mouse once across the 3D view so the camera rotates gently
+        around the cube.
+
+Voice:  "Hi, and welcome. In this video I'll walk you through a real-time
+        three-dimensional flocking simulation — a Boids model — built entirely
+        in Python. The whole thing runs locally on a regular laptop, using
+        PyQt6 for the interface, pyqtgraph and OpenGL for the 3D rendering,
+        and NumPy for the math. What you're looking at is the dashboard:
+        a large 3D viewport on the left, and a control panel, live metrics,
+        and real-time charts on the right."
+
+------------------------------------------------------------------------------
+[00:30 — 01:05]  SECTION 2 — THE 3D SCENE AND CAMERA
+------------------------------------------------------------------------------
+
+Action: Slowly drag to rotate the camera all the way around the cube. Then
+        scroll to zoom in toward the center, and scroll back out. Briefly
+        point the cursor at the ground grid, then at the colored XYZ axis
+        arrows in the corner.
+
+Voice:  "The simulation lives inside a bounded three-dimensional cube. You can
+        see the wire-frame box that marks its limits, a ground grid for
+        reference, and the colored X-Y-Z axis arrows in the corner so we
+        always know our orientation. The camera is fully interactive — I can
+        drag to orbit around the flock, scroll to zoom in and out, and pan to
+        reframe the scene. Each boid is drawn as a small oriented dart that
+        points in its direction of travel, and they're colored by speed, from
+        deep blue for the slower ones up to bright cyan for the fastest."
+
+------------------------------------------------------------------------------
+[01:05 — 01:35]  SECTION 3 — STARTING THE SIMULATION
+------------------------------------------------------------------------------
+
+Action: Move the cursor to the sidebar and click the "Start" button. The flock
+        begins moving. Let it run for a few seconds so the boids visibly
+        organize into moving groups. Rotate the camera slightly to follow them.
+
+Voice:  "Let's bring it to life. I'll click Start. Now the two hundred and
+        fifty boids begin to move. Notice that nobody is steering them
+        globally — each boid only follows three simple local rules, and the
+        flocking behavior you see emerges from those rules alone. Watch how
+        loose individuals quickly gather into coherent, swirling groups that
+        flow around the cube. And because the boundaries wrap around, a boid
+        that leaves one face of the cube reappears on the opposite side, with
+        its neighbors still able to see it across the edge."
+
+------------------------------------------------------------------------------
+[01:35 — 02:35]  SECTION 4 — THE THREE FLOCKING RULES (SLIDERS)
+------------------------------------------------------------------------------
+
+Action: With the simulation running, slowly drag the "Cohesion Strength"
+        slider up to near its maximum. Pause so the viewer sees the flock
+        tighten into denser clumps. Then drag it back down toward zero and let
+        the flock spread out and scatter.
+
+Voice:  "The behavior is controlled by three rules, and each one has a live
+        slider — changes take effect instantly. First, cohesion: the urge to
+        move toward the average position of nearby flockmates. As I raise it,
+        the boids pull together into tight, dense clusters. And as I lower it
+        back down, that gravitational pull weakens and the flock spreads out
+        and drifts apart."
+
+Action: Now slowly raise the "Separation Strength" slider to a high value.
+        The dense clumps loosen and the boids keep a clear personal distance.
+
+Voice:  "Second, separation: the rule that keeps boids from crowding each
+        other. As I increase it, you can see them push apart and maintain a
+        comfortable spacing, so even when they travel together they no longer
+        overlap."
+
+Action: Return separation to a moderate value. Then slowly raise the
+        "Alignment Strength" slider. The groups start moving in cleaner,
+        more parallel streams.
+
+Voice:  "And third, alignment: the tendency to match the heading of nearby
+        neighbors. As I turn it up, the motion becomes far more orderly —
+        the boids fall into the same direction and you get those smooth,
+        sweeping streams flying in formation. Together, just these three
+        rules — separation, alignment, and cohesion — produce surprisingly
+        lifelike flocking."
+
+------------------------------------------------------------------------------
+[02:35 — 03:15]  SECTION 5 — SPEED AND PERCEPTION
+------------------------------------------------------------------------------
+
+Action: Drag the "Boid Speed" slider up. The flock visibly accelerates. Drag
+        it back down to a calm cruising speed.
+
+Voice:  "There are two more controls. Boid speed sets how fast they travel.
+        Turning it up sends the whole flock racing around the cube, and easing
+        it back down returns them to a calm cruising pace."
+
+Action: Slowly raise the "Perception Radius" slider to a large value, pause,
+        then lower it to a small value. The flock merges into one big group at
+        high perception, and breaks into many small independent groups at low
+        perception.
+
+Voice:  "And perception radius controls how far each boid can 'see' its
+        neighbors. With a large radius, every boid is aware of almost everyone
+        else, so the whole population tends to merge into one giant
+        super-flock. With a small radius, each boid only reacts to its closest
+        companions, and the flock fragments into many small, independent
+        groups that wander on their own."
+
+------------------------------------------------------------------------------
+[03:15 — 04:05]  SECTION 6 — LIVE METRICS
+------------------------------------------------------------------------------
+
+Action: Move the cursor to the "Live Metrics" panel and slowly point at each
+        value in turn — total boids, average speed, average neighbor distance,
+        cluster count, and runtime — as they update.
+
+Voice:  "While all of this is happening, the dashboard measures the flock in
+        real time. The metrics panel shows the total number of boids; the
+        average speed across the whole flock; the average nearest-neighbor
+        distance, which tells us how tightly packed they are; an estimated
+        cluster count, computed by finding connected groups of nearby boids;
+        and the total simulation runtime."
+
+Action: Slowly drag the "Cohesion Strength" slider up again while keeping the
+        metrics panel in view. Point at the "Cluster count" and "Avg neighbor
+        distance" values as they change.
+
+Voice:  "And these aren't just decoration — they respond to what we do. Watch
+        the cluster count and the average neighbor distance as I increase
+        cohesion again. As the boids pull together, the neighbor distance
+        drops and the many separate clusters merge into just a handful. The
+        numbers track the behavior we can see in the viewport."
+
+------------------------------------------------------------------------------
+[04:05 — 04:40]  SECTION 7 — REAL-TIME CHARTS
+------------------------------------------------------------------------------
+
+Action: Move the cursor down to the "Live Charts" section. Point at each of the
+        three scrolling plots in turn: Average Speed, Average Neighbor
+        Distance, and Cluster Count. Then make one more slider change — for
+        example lower perception radius — and let the charts visibly react.
+
+Voice:  "Below the metrics, three live charts plot the same quantities over
+        time on a rolling window: average speed, average neighbor distance, and
+        cluster count. These let us see the dynamics — not just the current
+        value, but the trend. So when I change a parameter, like dropping the
+        perception radius here, you can watch the cluster-count line climb as
+        the flock breaks apart, and the neighbor-distance line shift in
+        response. It turns the simulation into a small live experiment."
+
+------------------------------------------------------------------------------
+[04:40 — 05:00]  SECTION 8 — RESET AND CLOSING
+------------------------------------------------------------------------------
+
+Action: Click the "Pause" button — the flock freezes. Then click "Reset" — the
+        boids scatter back to random positions and the charts clear. Optionally
+        click "Start" once more for a final few seconds of motion, then slowly
+        orbit the camera as the closing line is spoken.
+
+Voice:  "Finally, the transport controls: I can Pause to freeze the flock at
+        any moment, and Reset to scatter the boids back to random positions and
+        clear the history. And that's the project — a complete, real-time 3D
+        Boids flocking dashboard in Python, where complex, organic group
+        behavior emerges from three simple rules, all visualized and measured
+        live. Thanks for watching."
+
+==============================================================================
+ END OF SCRIPT
+==============================================================================

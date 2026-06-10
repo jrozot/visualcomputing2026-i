@@ -1,0 +1,111 @@
+==============================================================================
+ 3D BOIDS FLOCKING DASHBOARD — "CHALLENGES" DEV WALKTHROUGH (target ~3:00)
+==============================================================================
+
+Premise: a junior developer screen-shares the text editor and walks through
+three challenges faced while building the project — about one minute each.
+
+Format per segment:
+  Code(file:lines):  the code region to have open / highlighted on screen.
+  Problem:           what went wrong and how the current code addresses it.
+  Voice:             the voice-over, spoken verbatim over that code.
+
+Delivery: technical but conversational, kept fairly high-level — explain the
+idea, not every line. Aim for ~140 words/min.
+
+------------------------------------------------------------------------------
+[00:00 — 01:00]  CHALLENGE 1 — NEIGHBORS ACROSS A WRAP-AROUND WORLD
+------------------------------------------------------------------------------
+
+Code(boids/simulation.py:94-102):  scroll to and highlight the displacement /
+        distance block — the lines building `diff`, the wrap correction
+        `diff -= b * np.round(diff / b)`, the squared-distance `einsum`, and
+        the `np.fill_diagonal(dist2, np.inf)`.
+
+Problem: The cube uses wrap-around boundaries, so a boid leaving one face
+        reappears on the opposite side. A naive distance calculation treats
+        two boids on opposite faces as far apart, which broke flocking near
+        the edges. The fix wraps each pairwise displacement into the
+        half-cube range before measuring distance, so neighbors are detected
+        correctly across the boundary.
+
+Voice:  "The first real challenge came from the world being wrap-around — when
+        a boid exits one side of the cube, it comes back on the other side. At
+        first I just measured the straight-line distance between every pair of
+        boids, and the flocking looked broken near the edges. Two boids that
+        were actually right next to each other across a boundary were being
+        treated as if they were on opposite ends of the world. The fix is this
+        wrap correction here: before I compute any distances, I fold each
+        displacement vector into the range of half a cube in each direction.
+        That way 'across the edge' is correctly seen as 'close.' Then I square
+        it to get the distance matrix, and I set the diagonal to infinity so a
+        boid never counts itself as its own neighbor. After that, the flock
+        behaved consistently everywhere, including right at the borders."
+
+------------------------------------------------------------------------------
+[01:00 — 02:00]  CHALLENGE 2 — JITTERY, UNSTABLE MOTION
+------------------------------------------------------------------------------
+
+Code(boids/simulation.py:127-137):  highlight the heading-integration and
+        speed-clamp block — `self.vel += acc * p.turn_rate`, the speed
+        magnitude, the `min_speed` floor, and the `np.clip(...)` that keeps
+        speed inside a band. Optionally also glance at lines 38-39 where
+        `turn_rate` and `min_speed_ratio` are defined.
+
+Problem: Applying the combined steering forces directly made boids snap to new
+        headings every frame, producing nervous, twitchy motion, and some
+        boids would slow almost to a stop or accelerate without limit. The
+        current code scales the steering by a turn-rate so direction changes
+        are gradual, and clamps the speed into a fixed band so every boid keeps
+        moving smoothly.
+
+Voice:  "The second challenge was just making it look good. When I first added
+        the three flocking rules and applied the combined steering straight to
+        the velocity, the boids twitched — they'd snap to a new direction every
+        single frame, so the whole flock looked nervous instead of organic. On
+        top of that, some boids would almost stop dead while others sped up
+        endlessly. There were really two fixes. The first is this turn-rate
+        factor: instead of letting the steering fully redirect a boid each
+        frame, I scale it down, so headings change gradually and the motion
+        becomes smooth and curved. The second is the speed clamp right below
+        it — I take each boid's speed and squeeze it into a fixed band between a
+        minimum and a maximum. That guarantees nobody freezes and nobody runs
+        away, so the entire flock cruises at a believable, consistent pace."
+
+------------------------------------------------------------------------------
+[02:00 — 03:00]  CHALLENGE 3 — KEEPING IT SMOOTH IN REAL TIME
+------------------------------------------------------------------------------
+
+Code(boids/simulation.py:144-146):  highlight where the already-computed
+        distance matrix is reused to derive the nearest-neighbor metric and
+        feed `_update_metrics`. Then switch files.
+Code(boids/main_window.py:28 and 153-157):  highlight `CHART_EVERY = 6` and the
+        `if self._frame % CHART_EVERY == 0:` block that throttles chart updates.
+
+Problem: Computing metrics and redrawing the charts on every frame, on top of
+        the per-frame physics, was enough extra work to make the animation
+        stutter. The current design reuses the distance matrix that the
+        simulation already built — instead of recomputing it — and only
+        refreshes the charts every few frames, keeping the simulation loop
+        light enough to stay smooth.
+
+Voice:  "The last challenge was performance — keeping everything smooth in real
+        time. With a few hundred boids, the heavy part each frame is comparing
+        every boid against every other boid. The mistake I made early on was
+        doing that comparison once for the physics, and then doing more
+        expensive passes again just to compute the live metrics. So here, the
+        simulation reuses the exact distance information it already calculated
+        for the movement to also produce the nearest-neighbor and cluster
+        numbers — no duplicated work. The other cost was the charts. Redrawing
+        three plots on every single frame was enough to make the animation
+        stutter, and honestly you can't see updates that fast anyway. So over
+        in the main window, this counter only refreshes the charts every few
+        frames instead of every one. Between reusing the heavy computation and
+        easing off on the chart redraws, the simulation loop stays light and
+        the animation stays fluid. Those three fixes — handling the wrap-around
+        world, smoothing the motion, and trimming the per-frame cost — are what
+        took it from a rough prototype to something that actually feels polished."
+
+==============================================================================
+ END OF SCRIPT
+==============================================================================
